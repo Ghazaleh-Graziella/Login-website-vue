@@ -29,6 +29,9 @@ body {
   background-image: url("./assets/bg.png");
   background-repeat: no-repeat;
   background-size: cover;
+  box-sizing: border-box;
+  margin:auto;
+  padding: 0;
 
   .icon {
     display: flex;

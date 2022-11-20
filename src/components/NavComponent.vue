@@ -7,13 +7,15 @@
     ></MDBNavbarToggler>
     <MDBCollapse v-model="collapse1" id="navbarSupportedContent">
       <MDBNavbarNav class="mb-2 mb-lg-0">
-        <MDBNavbarItem to="#" > Home </MDBNavbarItem>
-        <MDBNavbarItem href="#"> About </MDBNavbarItem>
+        <MDBNavbarItem to="/home"> Home </MDBNavbarItem>
+        <MDBNavbarItem to="/about"> About </MDBNavbarItem>
       </MDBNavbarNav>
       <!-- Search form -->
-      <MDBNavbarItem href="#" class="d-flex"> Login </MDBNavbarItem>
+      <MDBNavbarItem to="/login" class="d-flex"> Login </MDBNavbarItem>
     </MDBCollapse>
   </MDBNavbar>
+
+  <router-view />
 </template>
 
 <script>
@@ -26,6 +28,7 @@ import {
   MDBCollapse,
 } from "mdb-vue-ui-kit";
 import { ref } from "vue";
+import { useStore } from "vuex";
 export default {
   components: {
     MDBNavbar,
@@ -38,9 +41,13 @@ export default {
   setup() {
     const collapse1 = ref(false);
     const dropdown1 = ref(false);
+
+    const store = useStore();
     return {
       collapse1,
       dropdown1,
+
+      user: store.state.user,
     };
   },
 };
