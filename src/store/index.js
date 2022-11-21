@@ -71,7 +71,7 @@ export default createStore({
       router.push("/login");
     },
 
-    fetUser({ commit }) {
+    fetchUser({ commit }) {
       auth.onAuthStateChanged(async (user) => {
         if (user === null) {
           commit("CLEAR_USER");

@@ -1,18 +1,26 @@
 <template>
-  <MDBNavbar expand="lg" dark bg="dark" container>
+  <MDBNavbar
+    expand="lg"
+    dark
+    bg="dark"
+    container
+    id="nav"
+    v-if="$store.state.user"
+  >
     <MDBNavbarBrand href="#">Ghazaleh</MDBNavbarBrand>
-    <MDBNavbarToggler
+    <!-- <MDBNavbarToggler
       @click="collapse1 = !collapse1"
       target="#navbarSupportedContent"
     ></MDBNavbarToggler>
-    <MDBCollapse v-model="collapse1" id="navbarSupportedContent">
-      <MDBNavbarNav class="mb-2 mb-lg-0">
-        <MDBNavbarItem to="/home"> Home </MDBNavbarItem>
-        <MDBNavbarItem to="/about"> About </MDBNavbarItem>
-      </MDBNavbarNav>
-      <!-- Search form -->
-      <MDBNavbarItem to="/login" class="d-flex"> Login </MDBNavbarItem>
-    </MDBCollapse>
+    <MDBCollapse v-model="collapse1" id="navbarSupportedContent"> -->
+    <MDBNavbarNav class="mb-2 mb-lg-0">
+      <MDBNavbarItem to="/home"> Home </MDBNavbarItem>
+      <MDBNavbarItem to="/about"> About </MDBNavbarItem>
+      <MDBNavbarItem @click="$store.dispatch('logout')"> Logout </MDBNavbarItem>
+    </MDBNavbarNav>
+    <!-- Search form -->
+    <MDBNavbarItem to="/login" class="d-flex"> Login </MDBNavbarItem>
+    <!-- </MDBCollapse> -->
   </MDBNavbar>
 
   <router-view />
@@ -21,32 +29,29 @@
 <script>
 import {
   MDBNavbar,
-  MDBNavbarToggler,
+  // MDBNavbarToggler,
   MDBNavbarBrand,
   MDBNavbarNav,
   MDBNavbarItem,
-  MDBCollapse,
+  // MDBCollapse,
 } from "mdb-vue-ui-kit";
-import { ref } from "vue";
 import { useStore } from "vuex";
+import { onBeforeMount } from "vue";
 export default {
   components: {
     MDBNavbar,
-    MDBNavbarToggler,
+    // MDBNavbarToggler,
     MDBNavbarBrand,
     MDBNavbarNav,
     MDBNavbarItem,
-    MDBCollapse,
+    // MDBCollapse,
   },
   setup() {
-    const collapse1 = ref(false);
-    const dropdown1 = ref(false);
-
     const store = useStore();
+    onBeforeMount(() => {
+      store.dispatch("fetchUser");
+    });
     return {
-      collapse1,
-      dropdown1,
-
       user: store.state.user,
     };
   },
