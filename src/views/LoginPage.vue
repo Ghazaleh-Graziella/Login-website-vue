@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-light mt-5">
     <MDBTabs v-model="form7ActiveTab">
       <!-- Tabs navs -->
       <MDBTabNav pills justify tabsClasses="mb-3">
@@ -12,7 +12,7 @@
       <!-- Tabs content -->
       <MDBTabContent>
         <MDBTabPane tabId="form7-login">
-          <form>
+          <form @submit.prevent="login">
             <div class="text-center mb-3">
               <p>Sign in with:</p>
               <MDBBtn color="primary" floating class="mx-1">
@@ -39,7 +39,7 @@
               type="email"
               label="Email address"
               id="form7LoginEmail"
-              v-model="form7LoginEmail"
+              v-model="form7Login.email"
               wrapperClass="mb-4"
             />
 
@@ -47,8 +47,9 @@
             <MDBInput
               type="password"
               label="Password"
+              autocomplete
               id="form7LoginPassword"
-              v-model="form7LoginPassword"
+              v-model="form7Login.password"
               wrapperClass="mb-4"
             />
 
@@ -59,7 +60,7 @@
                 <MDBCheckbox
                   label="Remember me"
                   id="form7LoginCheck"
-                  v-model="form7LoginCheck"
+                  v-model="form7Login.check"
                   wrapperClass="mb-3 mb-md-0"
                 />
               </MDBCol>
@@ -80,7 +81,7 @@
           </form>
         </MDBTabPane>
         <MDBTabPane tabId="form7-register">
-          <form>
+          <form @submit.prevent="register">
             <div class="text-center mb-3">
               <p>Sign up with:</p>
               <MDBBtn color="primary" floating class="mx-1">
@@ -107,7 +108,7 @@
               type="text"
               label="Name"
               id="form7RegisterName"
-              v-model="form7RegisterName"
+              v-model="form7Register.name"
               wrapperClass="mb-4"
             />
 
@@ -116,7 +117,7 @@
               type="text"
               label="Username"
               id="form7RegisterUsername"
-              v-model="form7RegisterUsername"
+              v-model="form7Register.username"
               wrapperClass="mb-4"
             />
 
@@ -125,7 +126,7 @@
               type="email"
               label="Email"
               id="form7RegisterEmail"
-              v-model="form7RegisterEmail"
+              v-model="form7Register.email"
               wrapperClass="mb-4"
             />
 
@@ -133,8 +134,9 @@
             <MDBInput
               type="password"
               label="Password"
+              autocomplete
               id="form7RegisterPassword"
-              v-model="form7RegisterPassword"
+              v-model="form7Register.password"
               wrapperClass="mb-4"
             />
 
@@ -142,18 +144,19 @@
             <MDBInput
               type="password"
               label="Repeat password"
+              autocomplete
               id="form7RegisterPasswordRepeat"
-              v-model="form7RegisterPasswordRepeat"
+              v-model="form7Register.passwordRepeat"
               wrapperClass="mb-4"
             />
 
             <!-- Checkbox -->
-            <MDBCheckbox
+            <!-- <MDBCheckbox
               label="I have read and agree to the terms"
               id="form7RegsiterTermsCheck"
-              v-model="form7RegsiterTermsCheck"
+              v-model="form7Regsiter.termsCheck"
               wrapperClass="d-flex justify-content-center mb-4"
-            />
+            /> -->
 
             <!-- Submit button -->
             <MDBBtn color="primary" block class="mb-3"> Sign in </MDBBtn>
@@ -176,8 +179,12 @@ import {
   MDBTabContent,
   MDBTabItem,
   MDBTabPane,
+  MDBCol,
+  MDBRow,
+  MDBIcon,
 } from "mdb-vue-ui-kit";
 import { ref } from "vue";
+import { useStore } from "vuex";
 export default {
   components: {
     MDBInput,
@@ -189,30 +196,29 @@ export default {
     MDBTabContent,
     MDBTabItem,
     MDBTabPane,
+    MDBCol,
+    MDBRow,
+    MDBIcon,
   },
   setup() {
     const form7ActiveTab = ref("form7-login");
-    const form7LoginEmail = ref("");
-    const form7LoginPassword = ref("");
-    const form7LoginCheck = ref(true);
-    const form7RegisterName = ref("");
-    const form7RegisterUsername = ref("");
-    const form7RegisterEmail = ref("");
-    const form7RegisterPassword = ref("");
-    const form7RegisterPasswordRepeat = ref("");
-    const form7RegsiterTermsCheck = ref(true);
+    const form7Login = ref("");
+    const form7Register = ref("");
+    const store = useStore();
 
+    const login = () => {
+      store.dispatch("login", form7Login.value);
+    };
+
+    const register = () => {
+      store.dispatch("register", form7Register.value);
+    };
     return {
       form7ActiveTab,
-      form7LoginEmail,
-      form7LoginPassword,
-      form7LoginCheck,
-      form7RegisterName,
-      form7RegisterUsername,
-      form7RegisterEmail,
-      form7RegisterPassword,
-      form7RegisterPasswordRepeat,
-      form7RegsiterTermsCheck,
+      form7Login,
+      form7Register,
+      login,
+      register,
     };
   },
 };

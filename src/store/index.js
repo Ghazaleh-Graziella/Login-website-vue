@@ -63,11 +63,11 @@ export default createStore({
       }
       commit("SET_USER", auth.currentUser);
 
-      router.push("/home");
+      router.push("/");
     },
     async logout({ commit }) {
       await signOut(auth);
-      commit("CLEAE_USER");
+      commit("CLEAR_USER");
       router.push("/login");
     },
 
@@ -79,7 +79,7 @@ export default createStore({
           commit("SERT_USER", user);
         }
         if (router.isReady() && router.currentRoute.value.path === "/login") {
-          router.push("/home");
+          router.push("/");
         }
       });
     },

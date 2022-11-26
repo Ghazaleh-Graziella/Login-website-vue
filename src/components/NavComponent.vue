@@ -1,12 +1,5 @@
 <template>
-  <MDBNavbar
-    expand="lg"
-    dark
-    bg="dark"
-    container
-    id="nav"
-    v-if="$store.state.user"
-  >
+  <MDBNavbar expand="lg" dark bg="dark" container id="nav">
     <MDBNavbarBrand href="#">Ghazaleh</MDBNavbarBrand>
     <!-- <MDBNavbarToggler
       @click="collapse1 = !collapse1"
@@ -14,10 +7,10 @@
     ></MDBNavbarToggler>
     <MDBCollapse v-model="collapse1" id="navbarSupportedContent"> -->
     <MDBNavbarNav class="mb-2 mb-lg-0">
-      <MDBNavbarItem to="/home"> Home </MDBNavbarItem>
+      <MDBNavbarItem to="/"> Home </MDBNavbarItem>
       <MDBNavbarItem to="/about"> About </MDBNavbarItem>
-      <MDBNavbarItem @click="$store.dispatch('logout')"> Logout </MDBNavbarItem>
     </MDBNavbarNav>
+    <MDBNavbarItem @click="$store.dispatch('logout')"> Logout </MDBNavbarItem>
     <!-- Search form -->
     <MDBNavbarItem to="/login" class="d-flex"> Login </MDBNavbarItem>
     <!-- </MDBCollapse> -->
@@ -35,8 +28,7 @@ import {
   MDBNavbarItem,
   // MDBCollapse,
 } from "mdb-vue-ui-kit";
-import { useStore } from "vuex";
-import { onBeforeMount } from "vue";
+
 export default {
   components: {
     MDBNavbar,
@@ -46,14 +38,6 @@ export default {
     MDBNavbarItem,
     // MDBCollapse,
   },
-  setup() {
-    const store = useStore();
-    onBeforeMount(() => {
-      store.dispatch("fetchUser");
-    });
-    return {
-      user: store.state.user,
-    };
-  },
+  setup() {},
 };
 </script>
