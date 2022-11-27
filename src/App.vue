@@ -1,13 +1,48 @@
 <template>
-  <NavComponent />
-</template>
+  <MDBNavbar
+    expand="lg"
+    dark
+    bg="dark"
+    container
+    id="nav"
+    v-if="$store.state.user"
+  >
+    <MDBNavbarBrand>Ghazaleh</MDBNavbarBrand>
+    <MDBNavbarNav class="mb-2 mb-lg-0">
+      <MDBNavbarItem to="/"> Home </MDBNavbarItem>
+      <MDBNavbarItem to="/about"> About </MDBNavbarItem>
+    </MDBNavbarNav>
+    <MDBNavbarItem @click="$store.dispatch('logout')"> Logout </MDBNavbarItem>
+  </MDBNavbar>
 
+  <router-view />
+</template>
 <script>
-import NavComponent from "./components/NavComponent.vue";
+import {
+  MDBNavbar,
+  MDBNavbarBrand,
+  MDBNavbarNav,
+  MDBNavbarItem,
+} from "mdb-vue-ui-kit";
+import { onBeforeMount } from "vue";
+import { useStore } from "vuex";
 export default {
-  name: "App",
   components: {
-    NavComponent,
+    MDBNavbar,
+    MDBNavbarBrand,
+    MDBNavbarNav,
+    MDBNavbarItem,
+  },
+  setup() {
+    const store = useStore();
+
+    onBeforeMount(() => {
+      store.dispatch("fetchUser");
+    });
+
+    return {
+      user: store.state.user,
+    };
   },
 };
 </script>

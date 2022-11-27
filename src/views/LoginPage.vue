@@ -38,8 +38,7 @@
             <MDBInput
               type="email"
               label="Email address"
-              id="form7LoginEmail"
-              v-model="form7Login.email"
+              v-model="login_form.email"
               wrapperClass="mb-4"
             />
 
@@ -48,23 +47,12 @@
               type="password"
               label="Password"
               autocomplete
-              id="form7LoginPassword"
-              v-model="form7Login.password"
+              v-model="login_form.password"
               wrapperClass="mb-4"
             />
 
             <!-- 2 column grid layout for inline styling -->
             <MDBRow class="mb-4">
-              <MDBCol class="d-flex justify-content-center">
-                <!-- Checkbox -->
-                <MDBCheckbox
-                  label="Remember me"
-                  id="form7LoginCheck"
-                  v-model="form7Login.check"
-                  wrapperClass="mb-3 mb-md-0"
-                />
-              </MDBCol>
-
               <MDBCol>
                 <!-- Simple link -->
                 <a href="#!">Forgot password?</a>
@@ -72,7 +60,9 @@
             </MDBRow>
 
             <!-- Submit button -->
-            <MDBBtn color="primary" block class="mb-4"> Sign in </MDBBtn>
+            <MDBBtn color="primary" block class="mb-4" type="submit">
+              Sign in
+            </MDBBtn>
 
             <!-- Register buttons -->
             <div class="text-center">
@@ -80,6 +70,8 @@
             </div>
           </form>
         </MDBTabPane>
+
+        <!-- register form  -->
         <MDBTabPane tabId="form7-register">
           <form @submit.prevent="register">
             <div class="text-center mb-3">
@@ -103,30 +95,11 @@
 
             <p class="text-center">or:</p>
 
-            <!-- Name input -->
-            <MDBInput
-              type="text"
-              label="Name"
-              id="form7RegisterName"
-              v-model="form7Register.name"
-              wrapperClass="mb-4"
-            />
-
-            <!-- Username input -->
-            <MDBInput
-              type="text"
-              label="Username"
-              id="form7RegisterUsername"
-              v-model="form7Register.username"
-              wrapperClass="mb-4"
-            />
-
             <!-- Email input -->
             <MDBInput
               type="email"
               label="Email"
-              id="form7RegisterEmail"
-              v-model="form7Register.email"
+              v-model="register_form.email"
               wrapperClass="mb-4"
             />
 
@@ -135,31 +108,14 @@
               type="password"
               label="Password"
               autocomplete
-              id="form7RegisterPassword"
-              v-model="form7Register.password"
+              v-model="register_form.password"
               wrapperClass="mb-4"
             />
-
-            <!-- Repeat Password input -->
-            <MDBInput
-              type="password"
-              label="Repeat password"
-              autocomplete
-              id="form7RegisterPasswordRepeat"
-              v-model="form7Register.passwordRepeat"
-              wrapperClass="mb-4"
-            />
-
-            <!-- Checkbox -->
-            <!-- <MDBCheckbox
-              label="I have read and agree to the terms"
-              id="form7RegsiterTermsCheck"
-              v-model="form7Regsiter.termsCheck"
-              wrapperClass="d-flex justify-content-center mb-4"
-            /> -->
 
             <!-- Submit button -->
-            <MDBBtn color="primary" block class="mb-3"> Sign in </MDBBtn>
+            <MDBBtn color="primary" block class="mb-3" type="submit">
+              Sign up
+            </MDBBtn>
           </form>
         </MDBTabPane>
       </MDBTabContent>
@@ -171,8 +127,6 @@
 <script>
 import {
   MDBInput,
-  MDBCheckbox,
-  // MDBTextarea,
   MDBBtn,
   MDBTabs,
   MDBTabNav,
@@ -188,8 +142,6 @@ import { useStore } from "vuex";
 export default {
   components: {
     MDBInput,
-    MDBCheckbox,
-    // MDBTextarea,
     MDBBtn,
     MDBTabs,
     MDBTabNav,
@@ -202,21 +154,23 @@ export default {
   },
   setup() {
     const form7ActiveTab = ref("form7-login");
-    const form7Login = ref("");
-    const form7Register = ref("");
+    const login_form = ref({});
+    const register_form = ref({});
     const store = useStore();
-
+    console.log("hi");
+    console.log("before", store.state);
     const login = () => {
-      store.dispatch("login", form7Login.value);
+      store.dispatch("login", login_form.value);
+      console.log(store);
     };
 
     const register = () => {
-      store.dispatch("register", form7Register.value);
+      store.dispatch("register", register_form.value);
     };
     return {
       form7ActiveTab,
-      form7Login,
-      form7Register,
+      login_form,
+      register_form,
       login,
       register,
     };
